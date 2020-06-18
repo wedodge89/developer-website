@@ -8,6 +8,9 @@ import pages from '../data/sidenav.json';
 
 import styles from './Navigation.module.scss';
 
+// TODO: Add this implementation
+const filterPages = (pages, _searchTerm) => pages;
+
 // recursively create navigation
 const renderNav = (pages, depthLevel = 0) => {
   const crumbs = useContext(BreadcrumbContext).flatMap((x) => x.displayName);
@@ -75,20 +78,23 @@ const renderNav = (pages, depthLevel = 0) => {
   ));
 };
 
-const Navigation = ({ className }) => {
+const Navigation = ({ className, searchTerm }) => {
+  const filteredPages = searchTerm ? filterPages(pages, searchTerm) : pages;
+
   return (
     <nav
       className={cx(styles.container, className)}
       role="navigation"
       aria-label="Navigation"
     >
-      <ul className={styles.listNav}>{renderNav(pages)}</ul>
+      <ul className={styles.listNav}>{renderNav(filteredPages)}</ul>
     </nav>
   );
 };
 
 Navigation.propTypes = {
   className: PropTypes.string,
+  searchTerm: PropTypes.string,
 };
 
 export default Navigation;
