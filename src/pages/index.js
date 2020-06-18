@@ -35,20 +35,20 @@ const getStartedGuides = [
 const guides = [
   {
     minutes: 5,
-    title: 'Full Stack Monitoring',
+    title: 'Full stack monitoring',
     description: 'Get data into New Relic using your existing instrumentation.',
     path: '',
   },
   {
     minutes: 10,
-    title: 'Customized Agents',
+    title: 'Customized agents',
     description:
       'Extend the New Relic agents you already have with custom events and attributes.',
     path: '',
   },
   {
     minutes: 30,
-    title: 'Open Telemetry',
+    title: 'Open telemetry',
     description:
       'Learn to use the open standard for data collection with New Relic.',
     path: 'guides/rest-api',
@@ -106,7 +106,7 @@ const IndexPage = ({ pageContext }) => (
 
       <GuideListing className={styles.guideListing}>
         <GuideListing.Heading className={styles.guideListingHeading}>
-          Build Solutions
+          Build solutions
         </GuideListing.Heading>
         <GuideListing.List>
           {guides.map((guide, index) => (

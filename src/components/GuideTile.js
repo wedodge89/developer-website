@@ -11,7 +11,7 @@ const GuideTile = ({ minutes, title, description, path, className }) => (
       <h2>{title}</h2>
       <p className={styles.description}>{description}</p>
       <button type="button" onClick={() => navigate(path)}>
-        Start the Guide
+        Start the guide
       </button>
     </div>
   </div>
