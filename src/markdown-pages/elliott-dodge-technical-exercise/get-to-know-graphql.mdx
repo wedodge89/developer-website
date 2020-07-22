@@ -1,9 +1,9 @@
 ---
-path: '/build-apps/add-time-picker-guide'
+path: '/elliott-dodge'
 duration: '30 min'
 title: 'Get to know GraphQL'
 template: 'GuideTemplate'
-description: 'Add a time picker to a sample application'
+description: 'Learn to use GraphQL queries to gather information'
 tileShorthand:
   title: 'Familiarize yourself with the GraphQL query language and  GraphiQL interface'
   description: 'Learn to use GraphQL queries to gather information'
@@ -11,32 +11,26 @@ tileShorthand:
 <Intro>
 The purpose of this guide is to introduce you to the GraphQL language and GraphiQL environment.
 
-Throughout the five lessons of this course, we will practice using GraphQL to query databases and your New Relic One Infrastructure information. 
+Throughout the five lessons of this course, we will practice using GraphQL to query New Relic's API and your New Relic data.
 
-By the time you finish this lesson, you will be ready to use GraphQL to search and change all kinds of data and optimize your New Relic experience.
-
-<Video id="inyshp3m7r" type="wistia"/>
+By the time you finish this workshop, you will be ready to use GraphQL to search and edit all kinds of data and optimize your New Relic experience.
 
 </Intro>
 
 ## Before you begin
 
-In order to use GraphiQL, you will need a New Relic account and an API key.
+In order to use GraphiQL, you will need a New Relic account and API key.
 
-* Install [Node.js](https://nodejs.org/en/download/).
-* Complete steps 1–4 of our [CLI wizard](https://one.newrelic.com/launcher/developer-center.launcher?pane=eyJuZXJkbGV0SWQiOiJkZXZlbG9wZXItY2VudGVyLmRldmVsb3Blci1jZW50ZXIifQ==), and be sure to make a copy of your account ID from step 1 because you’ll need it later.
+* If you do not yet have a New Relic account, you can create one at the [signup page](https://www.newrelic.com/signup).
+* Once you have created your account (or if you already had one), you will need to generate an API key for use with GraphiQL. Start by navigating to [New Relic One](one.newrelic.com) and clicking on the arrow beside your profile picture in the top-right corner.
+* From the drop-down menu, select "Account settings".
+* On the **Account settings** page, find and click "Users and roles" under the *ACCOUNT* heading.
+* This will open the **Users and roles** page in a new tab in your browser. In the *Users* list, find your account and click on either the name or email address. This will open the **User information** page for that user.
+* From there, find and click the *API keys* tab, and then the *New API key* button. When prompted, click "Yes, create API key" and voila, you are the proud owner of a new API key for use with GraphiQL.
 
-<Important>
+## Your first GraphQL query
 
-  If you already installed the New Relic One CLI, but you can't remember your account ID, you can re-run the wizard just to get your account ID.
-
-</Important>
-
-For additional details, see [Set up your development environment](set-up-dev-env).
-
-## Prepare the time picker sample code
-
-To get started, complete these steps to update the [application UUID (unique ID)](/explore-docs/nr1-cli) and run the sample application locally:
+Now it's time to get your hands dirty with GraphQL and GraphiQL. To start, open [GraphiQL](https://api.newrelic.com/graphiql) in your browser.
 
 <Steps>
 
