@@ -34,31 +34,33 @@ Now it's time to get your hands dirty with GraphQL and GraphiQL. To start, open 
 
 <Steps>
 
-  <Step>
+<Step>
 
 When you open GraphiQL, you will be greeted by a simple sample query to get you started. Try clicking the **Play** button to execute the example query. Your results should look something like this:
 
 {/* This is where the first image goes. Results of sample query. */}
 
-  </Step>
+</Step>
 
-  <Step>
+<Step>
 
 One of the advantages of GraphQL is that it enables the client, rather than the server, to determine which pieces of information a query returns. To demonstrate this, let's see if we can return the user's email, in additon to their name.
 
 In the query panel on the left side, press enter/return after the name field and type ```email``` on the new line. 
 
-  <Important>
+<Important>
 
-    As you type, GraphiQL provides type-ahead suggestions. These suggestions are based on the GraphQL schema. We will cover that in the next lesson.
+  As you type, GraphiQL provides type-ahead suggestions. 
+  These suggestions are based on the GraphQL schema. 
+  We will cover that in the next lesson.
 
-  </Important>
+</Important>
 
 Once you have added the email, press the **Play** button again. Your result should look like this:
 
 {/* Second Image here. Results of query with name and email. */}
 
-  </Step>
+</Step>
 
 </Steps>
 
@@ -117,9 +119,9 @@ Now it's time to explore what kind of information we can uncover using GraphiQL.
 
   <Step>
 
-    When you run this query, the GraphQL server fetches the requested information for all accounts that the user, you, has access to. When the queries are all finished (or when they timeout or encounter an error), GraphQL does the heavy lifting of assembling the result and returning it to the GraphiQL client. Your results should look something like this:
+When you run this query, the GraphQL server fetches the requested information for all accounts that the user, you, has access to. When the queries are all finished (or when they timeout or encounter an error), GraphQL does the heavy lifting of assembling the result and returning it to the GraphiQL client. Your results should look something like this:
 
-    {/* Third image */}
+{/* Third image */}
 
   </Step>
 
