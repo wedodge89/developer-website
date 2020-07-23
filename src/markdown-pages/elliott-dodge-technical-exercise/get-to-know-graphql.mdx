@@ -664,7 +664,129 @@ mutation{
   cloudConfigureIntegration(
     accountId:630060
     integrations:{aws
+    }
+  )}
 ```
+
+  </Step>
+
+  <Step>
+
+Next, we need to specify that we are updating the ```dynamodb``` configuration. Simply pass in an object with ```dynamodb``` as the *key* and, for the *value*, an array that contains an object of which fields you want to update and the values you want to set them to. 
+
+For now, let's update ```metricsPollingInterval``` and ```tagKey```. We will also add the ```linkedAccountId``` from our last exercise as an argument in the object of the ```dynamodb``` array.
+
+  </Step>
+
+Now, your request will look like this:
+
+```jsx
+mutation{
+  cloudConfigureIntegration(
+    accountId:630060
+    integrations:{aws:{
+      dynamodb:[
+        { linkedAccountId:4912
+          metricsPollingInterval:1800
+          tagKey:"mdw-test"
+        }]
+      }
+    }
+  )
+}
+```
+
+  <Step>
+
+The final part of our mutation request is to request a set of fields on the successful execution of our request and/or capture any errors. Note that in the mutation, we have asked for the value of ```metricsPollingInterval``` to be returned using the interface technique from before. This is kind of like using a quick console log to ensure that the value has been changed correctly.
+
+  </Step>
+
+<Important>
+
+Note: The polling interval is measured in seconds. The valid values are ```300``` (5 minutes), ```900``` (15 minutes), ```1800``` (30 minutes), and ```3600``` (1 hour).
+
+</Important>
+
+  <Step>
+
+Copy and paste the snippet below into GraphiQL, then click the ```Play``` button.
+
+  </Step>
+
+```jsx
+mutation{
+  cloudConfigureIntegration(
+    accountId:630060
+    integrations:{aws:{
+      dynamodb:[
+        { linkedAccountId:4912
+          metricsPollingInterval:1800
+          tagKey:"mdw-test"
+        }]
+      }
+    }
+  )
+  {
+    integrations{
+      id
+      name
+      updatedAt
+      ... on CloudDynamodbIntegration{
+            metricsPollingInterval
+            tagKey
+            tagValue
+            updatedAt
+            }
+    }
+    errors{
+      linkedAccountId
+      message
+      integrationSlug
+    }
+  }
+}
+```
+
+Your result should look like this:
+
+```jsx
+{
+  "data": {
+    "cloudConfigureIntegration": {
+      "errors": [],
+      "integrations": [
+        {
+          "id": 177184,
+          "metricsPollingInterval": 1800,
+          "name": "DynamoDB",
+          "tagKey": "mdw-test",
+          "tagValue": null,
+          "updatedAt": 1551139957
+        }
+      ]
+    }
+  }
+}
+```
+
+<Important>
+
+If you're curious, you can go to [Epoch Converter](www.epochconverter.com) to translate your ```updatedAt``` value into human-readable time. Just copy your value, paste it, and click the ```Timestamp to Human date``` button.
+
+</Important>
+
+  <Step>
+
+Now, go back to New Relic Infrastructure and refresh the DynamoDB configuration page. You should see the mutations you requested reflected  in the ```Metrics data polling interval every:``` field. You should also see the ```Filter by tag key``` switch turned ```ON``` with a value of ```mdw-test```.
+
+  </Step>
+
+</Steps>
+
+{/* Insert image here */}
+
+Ta-da! You have officially made your first successful mutation request using GraphQl. For our final magic trick, we are going to learn about NRQL!
 
 ## Summary
 
