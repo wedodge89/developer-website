@@ -34,15 +34,15 @@ Now it's time to get your hands dirty with GraphQL and GraphiQL. To start, open 
 
 <Steps>
 
-<Step>
+  <Step>
 
 When you open GraphiQL, you will be greeted by a simple sample query to get you started. Try clicking the **Play** button to execute the example query. Your results should look something like this:
 
 {/* This is where the first image goes. Results of sample query. */}
 
-</Step>
+  </Step>
 
-<Step>
+  <Step>
 
 One of the advantages of GraphQL is that it enables the client, rather than the server, to determine which pieces of information a query returns. To demonstrate this, let's see if we can return the user's email, in additon to their name.
 
@@ -60,7 +60,7 @@ Once you have added the email, press the **Play** button again. Your result shou
 
 {/* Second Image here. Results of query with name and email. */}
 
-</Step>
+  </Step>
 
 </Steps>
 
@@ -78,42 +78,42 @@ Now it's time to explore what kind of information we can uncover using GraphiQL.
 
   <Step>
 
-    To start, open [GraphiQL](https://api.newrelic.com/graphiql) and click the ```< Docs``` button in the upper right. This will open a side panel to the right that shows available fields for New Relic's GraphQL service.
+To start, open [GraphiQL](https://api.newrelic.com/graphiql) and click the ```< Docs``` button in the upper right. This will open a side panel to the right that shows available fields for New Relic's GraphQL service.
 
-    <Important>
-      GraphQL has two entry points, ```query``` and ```mutation```. Queries return information from New Relic. Mutations alter information.
-    </Important>
-
-  </Step>
-
-  <Step>
-
-    Click ```RootQueryType``` on the list in the panel you just opened. This will show the top-level fields for querying in GraphQL. You will notice ```actor``` in this list, which you might recognize from the previous lesson. You will also see that ```actor``` is at the very top level of the JSON structure in your Query Builder.
+<Important>
+  GraphQL has two entry points, ```query``` and ```mutation```. Queries return information from New Relic. Mutations alter information.
+</Important>
 
   </Step>
 
   <Step>
 
-    Click on ```actor``` in your right-side information panel for more information about this field. If you click ```Actor``` in the pane that follows, you can see a list of fields contained within the ```actor``` field, including ```users``` and ```accounts```. Try entering the following query in the left panel.
+Click ```RootQueryType``` on the list in the panel you just opened. This will show the top-level fields for querying in GraphQL. You will notice ```actor``` in this list, which you might recognize from the previous lesson. You will also see that ```actor``` is at the very top level of the JSON structure in your Query Builder.
 
-    <Important>
+  </Step>
+
+  <Step>
+
+Click on ```actor``` in your right-side information panel for more information about this field. If you click ```Actor``` in the pane that follows, you can see a list of fields contained within the ```actor``` field, including ```users``` and ```accounts```. Try entering the following query in the left panel.
+
+<Important>
       
-      ```
-      {
-        actor {
-          user {
-            name
-            email
-          }
-          accounts {
-            id
-            name
-          }
+  ```jsx
+    {
+      actor {
+        user {
+          name
+          email
+        }
+        accounts {
+          id
+          name
         }
       }
-      ```
+    }
+  ```
 
-    </Important>
+</Important>
 
   </Step>
 
