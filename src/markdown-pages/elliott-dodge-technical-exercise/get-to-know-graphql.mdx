@@ -36,25 +36,25 @@ Now it's time to get your hands dirty with GraphQL and GraphiQL. To start, open 
 
   <Step>
 
-When you open GraphiQL, you will be greeted by a simple sample query to get you started. Try clicking the **Play** button to execute the example query. Your results should look something like this:
+    When you open GraphiQL, you will be greeted by a simple sample query to get you started. Try clicking the **Play** button to execute the example query. Your results should look something like this:
 
-{/* This is where the first image goes. Results of sample query. */}
+    {/* This is where the first image goes. Results of sample query. */}
 
   </Step>
 
   <Step>
 
-One of the advantages of GraphQL is that it enables the client, rather than the server, to determine which pieces of information a query returns. To demonstrate this, let's see if we can return the user's email, in additon to their name.
+    One of the advantages of GraphQL is that it enables the client, rather than the server, to determine which pieces of information a query returns. To demonstrate this, let's see if we can return the user's email, in additon to their name.
 
 In the query panel on the left side, press enter/return after the name field and type ```email``` on the new line. 
 
-  <Important>
+    <Important>
 
-    As you type, GraphiQL provides type-ahead suggestions. These suggestions are based on the GraphQL schema. We will cover that in the next lesson.
+      As you type, GraphiQL provides type-ahead suggestions. These suggestions are based on the GraphQL schema. We will cover that in the next lesson.
 
-  </Important>
+    </Important>
 
-Once you have added the email, press the **Play** button again. Your result should look like this:
+    Once you have added the email, press the **Play** button again. Your result should look like this:
 
 {/* Second Image here. Results of query with name and email. */}
 
@@ -76,46 +76,58 @@ Now it's time to explore what kind of information we can uncover using GraphiQL.
 
   <Step>
 
-To start, open [GraphiQL](https://api.newrelic.com/graphiql) and click the ```< Docs``` button in the upper right. This will open a side panel to the right that shows available fields for New Relic's GraphQL service.
+    To start, open [GraphiQL](https://api.newrelic.com/graphiql) and click the ```< Docs``` button in the upper right. This will open a side panel to the right that shows available fields for New Relic's GraphQL service.
+
+    <Important>
+      GraphQL has two entry points, ```query``` and ```mutation```. Queries return information from New Relic. Mutations alter information.
+    </Important>
 
   </Step>
 
   <Step>
 
-Replace `<ADD YOUR ACCOUNT ID>` with your account id:
-
-<Important>
-
-  Your account ID is available in the CLI wizard (see **Before you begin**).
-  
-</Important>
-
-  ```jsx
-  this.accountId = <ADD YOUR ACCOUNT ID>;
-  ```
+    Click ```RootQueryType``` on the list in the panel you just opened. This will show the top-level fields for querying in GraphQL. You will notice ```actor``` in this list, which you might recognize from the previous lesson. You will also see that ```actor``` is at the very top level of the JSON structure in your Query Builder.
 
   </Step>
 
   <Step>
 
-  Change to the `add-time-picker` directory:
+    Click on ```actor``` in your right-side information panel for more information about this field. If you click ```Actor``` in the pane that follows, you can see a list of fields contained within the ```actor``` field, including ```users``` and ```accounts```. Try entering the following query in the left panel.
 
-  ```
-  cd /nr1-howto/add-time-picker
-  ```
+    <Important>
+      
+      ```
+      {
+        actor {
+          user {
+            name
+            email
+          }
+          accounts {
+            id
+            name
+          }
+        }
+      }
+      ```
+
+    </Important>
 
   </Step>
 
   <Step>
 
-Execute these commands to update the UUID and serve the sample application:
+    When you run this query, the GraphQL server fetches the requested information for all accounts that the user, you, has access to. When the queries are all finished (or when they timeout or encounter an error), GraphQL does the heavy lifting of assembling the result and returning it to the GraphiQL client. Your results should look something like this:
 
-  ```
-  nr1 nerdpack:uuid -gf
-  nr1 nerdpack:serve
-  ```
+    {/* Third image */}
 
   </Step>
+
+</Steps>
+
+Now you should have a better understanding of the New Relic data model, as well as how you can modify your queries to return just the right information. 
+
+A typical REST API would require at least two different API calls, and maybe two different API keys, to do this. Not to mention that GraphiQL gives you the ability to specify exactly what data you want, so as to avoid over-fetching. When querying, you can add only the fields you need, omitting anything you're not currently looking for. 
 
   <Step>
 
