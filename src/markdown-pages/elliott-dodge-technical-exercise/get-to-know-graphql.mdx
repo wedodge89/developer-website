@@ -488,7 +488,7 @@ Copy and paste the query below into GraphiQL and click ```Play```.
 ```jsx
 {
   actor {
-    account(id: 630060) {
+    account(id: YOUR_ACCOUNT_NUMBER_GOES_HERE) {
       cloud {
         linkedAccounts {
           id
@@ -662,7 +662,7 @@ The second arguement is which integrations you want to update. These integration
 ```jsx
 mutation{
   cloudConfigureIntegration(
-    accountId:630060
+    accountId:YOUR_ACCOUNT_NUMBER_GOES_HERE
     integrations:{aws
     }
   )}
@@ -683,7 +683,7 @@ Now, your request will look like this:
 ```jsx
 mutation{
   cloudConfigureIntegration(
-    accountId:630060
+    accountId:YOUR_ACCOUNT_NUMBER_GOES_HERE
     integrations:{aws:{
       dynamodb:[
         { linkedAccountId:4912
@@ -717,7 +717,7 @@ Copy and paste the snippet below into GraphiQL, then click the ```Play``` button
 ```jsx
 mutation{
   cloudConfigureIntegration(
-    accountId:630060
+    accountId:YOUR_ACCOUNT_NUMBER_GOES_HERE
     integrations:{aws:{
       dynamodb:[
         { linkedAccountId:4912
@@ -788,9 +788,126 @@ Now, go back to New Relic Infrastructure and refresh the DynamoDB configuration 
 
 Ta-da! You have officially made your first successful mutation request using GraphQl. For our final magic trick, we are going to learn about NRQL!
 
+## 4. NRQL While You WorkQL
+
+This final exercise will incorporate the New Relic Query Language, or NRQL, into GraphQL. We will also see how to add an alias to your request. Aliases are especially useful when you have multiple similar requests contained within a query. Let's get to it!
+
+### Basic GraphQL Query with NRQL
+
+<Steps>
+
+  <Step>
+
+For starters, copy and paste the query below into GraphiQL and click ```Play``` to run it. 
+
+  </Step>
+
+```jsx
+{
+   actor {
+    account(id: YOUR_ACCOUNT_NUMBER_GOES_HERE) {
+      nrql(query: "SELECT count(*) FROM PageView FACET appName SINCE 1 day ago TIMESERIES AUTO") {
+        results
+      }
+    }
+  }
+}
+```
+
+Your results will look like this (they may well include many more results, but this should give you the idea):
+
+```jsx
+{
+  "data": {
+    "actor": {
+      "account": {
+        "nrql": {
+          "results": [
+            {
+              "beginTimeSeconds": 1548946238,
+              "endTimeSeconds": 1548948038,
+              "facet": "Origami Portal",
+              "appName": "Origami Portal",
+              "count": 601
+            },
+            {
+              "beginTimeSeconds": 1548948038,
+              "endTimeSeconds": 1548949838,
+              "facet": "Origami Portal",
+              "appName": "Origami Portal",
+              "count": 595
+            },
+```
+
+And just like that, you have a ton of detailed information from the New Relic database. But the fun doesn't stop there. Remember that with GraphQL you can issue multiple requests at once. Just watch!
+
+  <Step>
+
+Copy and paste this into GraphiQL and run it:
+
+```jsx
+{
+   actor {
+    account(id: YOUR_ACCOUNT_NUMBER_GOES_HERE) {
+      nrql(query: "SELECT count(*) FROM PageView FACET appName SINCE 1 day ago TIMESERIES AUTO") {
+        results
+      }
+     nrql(query: "SELECT count(*) FROM Transaction SINCE 12 hours ago COMPARE WITH 12 hours ago TIMESERIES AUTO") {
+        results
+      }
+    }
+  }
+}
+```
+
+  </Step>
+
+Did you get the results you expected? Probably not. Even though both requests get executed, only the last results object gets returned. If you don't believe us, try switching the two queries and see what results are returned.
+
+Aliases to the rescue! Using aliases, you can name each results object so that they are returned as two different (and differently named) objects. 
+
+  <Step>
+    
+Copy the query below, noting the addition of the ```PageViews``` and ```Transactions``` aliases in front of each ```nrql``` statement.
+
+  </Step>
+
+</Step>
+
+```jsx
+{
+  actor {
+    account(id: YOUR_ACCOUNT_NUMBER_GOES_HERE) {
+      PageViews: nrql(query: "SELECT count(*) FROM PageView FACET appName SINCE 1 day ago TIMESERIES AUTO") {
+        results
+      }
+      Transactions: nrql(query: "SELECT count(*) FROM Transaction SINCE 12 hours ago COMPARE WITH 12 hours ago TIMESERIES AUTO") {
+        results
+      }
+    }
+  }
+}
+```
+
+Your results should look more like this (you can expand the data sections for more in-depth information):
+
+{/* Example image */}
+
+### More Fun with NRQL
+
+Take some time to experiment with NRQL to see what other information you can return with a ```nrql``` query. Don't forget that you can use type-ahead to see all possible values.
+
 ## Summary
 
 When you completed all the steps in this example, you successfully implemented the time picker in your application by importing the `PlatformStateContext` component and accessing its `timePicker` data object. 
+
+## Glossary of Terms
+
+* actor
+* GraphQL
+* GraphiQL
+* NRQL
+
 
 ## Related information
 
