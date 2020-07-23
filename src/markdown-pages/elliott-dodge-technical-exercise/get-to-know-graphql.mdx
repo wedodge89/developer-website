@@ -81,7 +81,7 @@ Now it's time to explore what kind of information we can uncover using GraphiQL.
 To start, open [GraphiQL](https://api.newrelic.com/graphiql) and click the ```< Docs``` button in the upper right. This will open a side panel to the right that shows available fields for New Relic's GraphQL service.
 
 <Important>
-  GraphQL has two entry points, ```query``` and ```mutation```. Queries return information from New Relic. Mutations alter information.
+  GraphQL has two entry points, query and mutation. Queries return information from New Relic. Mutations alter information.
 </Important>
 
   </Step>
@@ -130,6 +130,107 @@ When you run this query, the GraphQL server fetches the requested information fo
 Now you should have a better understanding of the New Relic data model, as well as how you can modify your queries to return just the right information. 
 
 A typical REST API would require at least two different API calls, and maybe two different API keys, to do this. Not to mention that GraphiQL gives you the ability to specify exactly what data you want, so as to avoid over-fetching. When querying, you can add only the fields you need, omitting anything you're not currently looking for. 
+
+### Advanced Topic: Querying Against the Schema
+
+In addition to querying your database, you can also use GraphQL to return information about the schema itself. The query below will return New Relic's full data schema. (For now, don't worry about the term ```fragment```.)
+
+<Steps>
+
+  <Step>
+Copy and past the query below into GraphiQL and run it. The resulting data will include New Relic-specific information, like ```metricsPollingInterval```. These values drive the GraphiQL tool and can be used programmatically in your applications.
+
+  </Step>
+
+```jsx
+query IntrospectionQuery {
+  __schema {
+    queryType {
+      name
+    }
+    mutationType {
+      name
+    }
+    subscriptionType {
+      name
+    }
+    types {
+      ...FullType
+    }
+    directives {
+      name
+      description
+      args {
+        ...InputValue
+      }
+      onOperation
+      onFragment
+      onField
+    }
+  }
+}
+
+fragment FullType on __Type {
+  kind
+  name
+  description
+  fields(includeDeprecated: true) {
+    name
+    description
+    args {
+      ...InputValue
+    }
+    type {
+      ...TypeRef
+    }
+    isDeprecated
+    deprecationReason
+  }
+  inputFields {
+    ...InputValue
+  }
+  interfaces {
+    ...TypeRef
+  }
+  enumValues(includeDeprecated: true) {
+    name
+    description
+    isDeprecated
+    deprecationReason
+  }
+  possibleTypes {
+    ...TypeRef
+  }
+}
+
+fragment InputValue on __InputValue {
+  name
+  description
+  type {
+    ...TypeRef
+  }
+  defaultValue
+}
+
+fragment TypeRef on __Type {
+  kind
+  name
+  ofType {
+    kind
+    name
+    ofType {
+      kind
+      name
+      ofType {
+        kind
+        name
+      }
+    }
+  }
+}
+```
+
+</Steps>
 
   <Step>
 
