@@ -28,7 +28,7 @@ In order to use GraphiQL, you will need a New Relic account and API key.
 * This will open the **Users and roles** page in a new tab in your browser. In the *Users* list, find your account and click on either the name or email address. This will open the **User information** page for that user.
 * From there, find and click the *API keys* tab, and then the *New API key* button. When prompted, click "Yes, create API key" and voila, you are the proud owner of a new API key for use with GraphiQL.
 
-## Your first GraphQL query
+## 0. Your first GraphQL query
 
 Now it's time to get your hands dirty with GraphQL and GraphiQL. To start, open [GraphiQL](https://api.newrelic.com/graphiql) in your browser.
 
@@ -36,27 +36,47 @@ Now it's time to get your hands dirty with GraphQL and GraphiQL. To start, open 
 
   <Step>
 
-If you haven't already done so, clone the example applications from our [how-to GitHub repo](https://github.com/newrelic/nr1-how-to).
+When you open GraphiQL, you will be greeted by a simple sample query to get you started. Try clicking the **Play** button to execute the example query. Your results should look something like this:
 
-  ```bash
-  git clone https://github.com/newrelic/nr1-how-to.git
-  ```
+{/* This is where the first image goes. Results of sample query. */}
 
   </Step>
 
   <Step>
 
-Change to the directory `nr1-howto-add-time-picker-nerdlet`:
+One of the advantages of GraphQL is that it enables the client, rather than the server, to determine which pieces of information a query returns. To demonstrate this, let's see if we can return the user's email, in additon to their name.
 
-  ```bash
-  cd nr1-how-to/add-time-picker/nerdlets/nr1-howto-add-time-picker-nerdlet
-  ```
+In the query panel on the left side, press enter/return after the name field and type ```email``` on the new line. 
+
+  <Important>
+
+    As you type, GraphiQL provides type-ahead suggestions. These suggestions are based on the GraphQL schema. We will cover that in the next lesson.
+
+  </Important>
+
+Once you have added the email, press the **Play** button again. Your result should look like this:
+
+{/* Second Image here. Results of query with name and email. */}
 
   </Step>
 
+</Steps>
+
+And just like that, you have successfully completed your first custom GraphQL query. Next, we will dive deeper into the GraphQL schema.
+
+## 1. The GraphQL Schema
+
+One of GraphQL's definining characteristics is that it is strongly typed. This means that developers can specifically choose which information is available to the GraphQL service. This is done with a GraphQL schema. Schemas provide flexibility for developers to add details about the data they return. To that end, each field has a description that the developer can use to indicate how the data is to be used. 
+
+Schemas also empower developers to build tools that ensure proper query construction and data use. One use for this is to indicate deprecated fields, enabling tools like GraphiQL to discourage use of that data. 
+
+Now it's time to explore what kind of information we can uncover using GraphiQL.
+
+<Steps>
+
   <Step>
 
-In your preferred text editor, open `index.js`.
+To start, open [GraphiQL](https://api.newrelic.com/graphiql) and click the ```< Docs``` button in the upper right. This will open a side panel to the right that shows available fields for New Relic's GraphQL service.
 
   </Step>
 
