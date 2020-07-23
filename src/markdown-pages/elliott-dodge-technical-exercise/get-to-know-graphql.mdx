@@ -32,6 +32,8 @@ In order to use GraphiQL, you will need a New Relic account and API key.
 
 Now it's time to get your hands dirty with GraphQL and GraphiQL. To start, open [GraphiQL](https://api.newrelic.com/graphiql) in your browser.
 
+### Basic Query
+
 <Steps>
 
   <Step>
@@ -68,11 +70,15 @@ And just like that, you have successfully completed your first custom GraphQL qu
 
 ## 1. The GraphQL Schema
 
+### Understanding the Data Model
+
 One of GraphQL's definining characteristics is that it is strongly typed. This means that developers can specifically choose which information is available to the GraphQL service. This is done with a GraphQL schema. Schemas provide flexibility for developers to add details about the data they return. To that end, each field has a description that the developer can use to indicate how the data is to be used. 
 
 Schemas also empower developers to build tools that ensure proper query construction and data use. One use for this is to indicate deprecated fields, enabling tools like GraphiQL to discourage use of that data. 
 
 Now it's time to explore what kind of information we can uncover using GraphiQL.
+
+### Exploring with the Help of Schemas
 
 <Steps>
 
@@ -96,8 +102,6 @@ Click ```RootQueryType``` on the list in the panel you just opened. This will sh
 
 Click on ```actor``` in your right-side information panel for more information about this field. If you click ```Actor``` in the pane that follows, you can see a list of fields contained within the ```actor``` field, including ```users``` and ```accounts```. Try entering the following query in the left panel.
 
-<Important>
-      
   ```jsx
     {
       actor {
@@ -112,8 +116,6 @@ Click on ```actor``` in your right-side information panel for more information a
       }
     }
   ```
-
-</Important>
 
   </Step>
 
@@ -233,310 +235,361 @@ fragment TypeRef on __Type {
 
 </Steps>
 
-  <Step>
+## 2. Querying Infrastructure
 
-Once the sample application is successfully served, go to the local New Relic One homepage: https://one.newrelic.com/?nerdpacks=local and click **Add Time Picker**:
+In this section, we will query various pieces of information within New Relic Infrastructure. This information will be used to update settings in the next section.
 
-  <Important>
+### Browsing Infrastructure
 
-If you don't see any launchers, click **Your applications**.
-
-  </Important>
-
-![New Relic One launcher image](../../images/time-picker-guide/homepage-launcher.png)
-
-  </Step>
-
-</Steps>
-
-After launching the **Add Time Picker** application, you see a dashboard that gives an overview of the transactions in your New Relic account:
-
-![Transaction overview application](../../images/time-picker-guide/add-timepicker.png)
-
-By default, the application shows your data within the last 60 minutes. If you toggle the time picker, it doesn't update the charts because the transaction overview application isn't connected to the New Relic One platform. It has no access to the data from the time picker. 
-
-In the following sections, you'll add the time picker to the example application and add the time to the queries.
-
-## Import the `PlatformStateContext` component
-
-The first step in adding the time picker is to import the `PlatformStateContext` component. 
-
-<Important>
-
-  If you need more details about the `PlatformStateContext` example that follows, see the [APIs and components page](/components/platform-state-context)
- 
-</Important> 
-
-Here's what the `PlatformStateContext` component does:
-
-* Wraps all of the code within the return statement of the render method
-* Makes a function call passing in the New Relic platform state
-* Returns all of the code within our current return statement
-
-Complete these steps:
-
+To start, you will want to familiarize yourself with what infrastructure integrations are available to you in New Relic. In the example below, you will see *Billing*, *DynamoDB*, and other services available for **Amazon Web Services**.
 <Steps>
 
-<Step>
+  <Step>
 
-In a text editor, open `/add-time-picker/nerdlets/nr1-howto-add-time-picker-nerdlet/index.js`.
+Before moving forward, take some time to explore what is available to you. Click the ```Configure``` link to see your options and current settings. 
 
   </Step>
 
-  <Step>
-
-Add the `PlatformStateContext` component to the end of the import statement so it looks like this:
-
-  ```jsx
-  import {
-    Grid,
-    GridItem,
-    HeadingText,
-    AreaChart,
-    TableChart,
-    PieChart,
-    PlatformStateContext
-  } from 'nr1';
-  ```
-
-</Step>
-
-  <Step>
-
-Just below the current `return` insert this code for the `PlatformStateContext` component:
-
-  ```jsx
-  <PlatformStateContext.Consumer>
-      {(platformState) => {
-  return (
-  // ADD THE CURRENT RETURN CODE HERE
-  )
-  }}
-</PlatformStateContext.Consumer>
-```
-
-  </Step>
-
-  <Step>
-
-Move the current application code so it is under the `return` of the `PlatformState` function call. The `return` statement should now look like this:
-
-  ```jsx
-  return (
-      <PlatformStateContext.Consumer>
-          {(PlatformState) => {
-              return (
-              <>
-                  <Grid
-                  className="primary-grid"
-                  spacingType={[Grid.SPACING_TYPE.NONE, Grid.SPACING_TYPE.NONE]}
-                  >
-                      <GridItem className="primary-content-container" columnSpan={6}>
-                          <main className="primary-content full-height">
-                          <HeadingText spacingType={[HeadingText.SPACING_TYPE.MEDIUM]} type={HeadingText.TYPE.HEADING_4}>
-                              Transaction Overview
-                          </HeadingText>
-                          <TableChart fullWidth accountId={this.accountId} query={trxOverview} />
-                          </main>
-                      </GridItem>
-                      <GridItem className="primary-content-container" columnSpan={6}>
-                          <main className="primary-content full-height">
-                          <HeadingText spacingType={[HeadingText.SPACING_TYPE.MEDIUM]} type={HeadingText.TYPE.HEADING_4}>
-                              Average Response Time
-                          </HeadingText>
-                          <AreaChart fullWidth accountId={this.accountId} query={avgResTime} />
-                          </main>
-                      </GridItem>
-                      <GridItem className="primary-content-container" columnSpan={6}>
-                          <main className="primary-content full-height">
-                          <HeadingText spacingType={[HeadingText.SPACING_TYPE.MEDIUM]} type={HeadingText.TYPE.HEADING_4}>
-                              Response Code
-                          </HeadingText>
-                          <PieChart fullWidth accountId={this.accountId} query={responseCodes} />
-                          </main>
-                      </GridItem>
-                      <GridItem className="primary-content-container" columnSpan={6}>
-                          <main className="primary-content full-height">
-                          <HeadingText spacingType={[HeadingText.SPACING_TYPE.MEDIUM]} type={HeadingText.TYPE.HEADING_4}>
-                              Transaction Errors
-                          </HeadingText>
-                          <PieChart fullWidth accountId={this.accountId} query={errCount} />
-                          </main>
-                      </GridItem>
-                  </Grid>
-              </>
-              );
-          }}
-      </PlatformStateContext.Consumer>
-  );
-  ```
-
-  </Step>
-
-  <Step>
-
-Add a `console.log` statement to make sure you are seeing appropriate data. Insert the following code inside the `PlatformState` return statement just before the opening tag for the `<Grid>` component:
-
-  ```jsx
-  /* Taking a peek at the PlatformState */
-  console.log(PlatformState);
-  ```
-
-  </Step>
+{/* Next image goes here */}
 
 </Steps>
 
-After you complete these steps, your browser console displays something like this:
+### Querying Infrastructure
 
-![Browser console image](../../images/time-picker-guide/console.png)
-
-## Add the time to the queries
-
-In your console, you should see some data from the New Relic platform state. Now you are ready to add `timeRange` data to update the charts in the transaction overview application.
-
-This step requires you to import the `timeRangeToNrql` utility method from the New Relic One community library.  
-
-<Important>
-
-You can get more details on the New Relic One community library from our [GitHub repo](https://github.com/newrelic/nr1-community).
-
-</Important> 
-
-This helper method takes your `PlatformState.timeRange` duration data, formats it from milliseconds, and returns a formatted `SINCE` statement to add to your `NRQL`. 
+Now we are going to use GraphQL to retrieve information about infrastructure. Start by going to [GraphiQL](https://api.newrelic.com/graphiql).
 
 <Steps>
 
   <Step>
 
-Import the `timeRangeToNrql` method by inserting this line of code below the other `import` sections:
+First, copy and paste the query below into GraphiQL.
+
+  </Step>
+
+  <Step>
+
+Before clicking play, replace the value of account(id: ) with your personal account number. 
+
+  </Step>
 
 <Important>
 
-You don't need to include the `AccountDropdown` from the community import example.
-
-</Important> 
-
-  ```jsx
-  import { timeRangeToNrql } from '@newrelic/nr1-community';
-  ```
-
-  </Step>
-
-  <Step>
-
-Pass the `PlatformState` to the `timeRangeToNrql` helper, and save its output as a `since` statement for later use:
-
-  ```jsx
-  const since = timeRangeToNrql(PlatformState);
-  ```
-
-  </Step>
-
-  <Step>
-
-After creating the `since` variable, go through the code in the `PlatformStateContext` return statement and concatenate the `since` variable in each of the existing chart component queries. Here's a `TableChart` example:
-
-  ```jsx
-  <TableChart fullWidth accountId={this.accountId} query={trxOverview+since} />
-  ```
-
-  </Step>
-
-  <Step>
-
-After you update all of the chart components, confirm that the final `index.js` file looks similar to this:
-
-<Important>
-
-This completed sample code is in your `nerdlet final.js`.
+You can find your account id in the URL of your New Relic instance. For instance, in the URL https://infrastructure.newrelic.com/accounts/630060/integrations, the account id would be 630060.
 
 </Important>
 
-
-  ```jsx
-  import React from 'react';
-  import {
-    PlatformStateContext,
-    Grid,
-    GridItem,
-    HeadingText,
-    AreaChart,
-    TableChart,
-    PieChart
-  } from 'nr1';
-  import { timeRangeToNrql } from '@newrelic/nr1-community';
-
-  export default class Nr1HowtoAddTimePicker extends React.Component {
-      constructor(props){
-          super(props)
-          this.accountId = 1;
+```jsx
+{
+  actor {
+    account(id: YOUR_ACCOUNT_NUMBER_GOES_HERE) {
+      cloud {
+        linkedAccounts {
+          id
+          externalId
+          name
+          authLabel
+          provider {
+            id
+            name
+            slug
+          }
+          integrations {
+            id
+            name
+            service {
+              id
+              slug
+              name
+              createdAt
+              updatedAt
+              provider {
+                name
+                id
+              }
+            }
+          }
+        }
       }
-      render() {
-          const avgResTime = `SELECT average(duration) FROM Transaction FACET appName TIMESERIES AUTO `;
-          const trxOverview = `FROM Transaction SELECT count(*) as 'Transactions', apdex(duration) as 'apdex', percentile(duration, 99, 95) FACET appName `;
-          const errCount = `FROM TransactionError SELECT count(*) as 'Transaction Errors' FACET error.message `;
-          const responseCodes = `SELECT count(*) as 'Response Code' FROM Transaction FACET httpResponseCode `;
-
-          return (
-              <PlatformStateContext.Consumer>
-                  {(PlatformState) => {
-                      /* Taking a peek at the PlatformState */
-                      console.log(PlatformState)
-
-                      const since = timeRangeToNrql(PlatformState);
-                      console.log(since);
-
-                      return (
-                      <>
-                          <Grid
-                          className="primary-grid"
-                          spacingType={[Grid.SPACING_TYPE.NONE, Grid.SPACING_TYPE.NONE]}
-                          >
-                              <GridItem className="primary-content-container" columnSpan={6}>
-                                  <main className="primary-content full-height">
-                                  <HeadingText spacingType={[HeadingText.SPACING_TYPE.MEDIUM]} type={HeadingText.TYPE.HEADING_4}>
-                                      Transaction Overview
-                                  </HeadingText>
-                                  <TableChart fullWidth accountId={this.accountId} query={trxOverview+since} />
-                                  </main>
-                              </GridItem>
-                              <GridItem className="primary-content-container" columnSpan={6}>
-                                  <main className="primary-content full-height">
-                                  <HeadingText spacingType={[HeadingText.SPACING_TYPE.MEDIUM]} type={HeadingText.TYPE.HEADING_4}>
-                                      Average Response Time
-                                  </HeadingText>
-                                  <AreaChart fullWidth accountId={this.accountId} query={avgResTime+since} />
-                                  </main>
-                              </GridItem>
-                              <GridItem className="primary-content-container" columnSpan={6}>
-                                  <main className="primary-content full-height">
-                                  <HeadingText spacingType={[HeadingText.SPACING_TYPE.MEDIUM]} type={HeadingText.TYPE.HEADING_4}>
-                                      Response Code
-                                  </HeadingText>
-                                  <PieChart fullWidth accountId={this.accountId} query={responseCodes+since} />
-                                  </main>
-                              </GridItem>
-                              <GridItem className="primary-content-container" columnSpan={6}>
-                                  <main className="primary-content full-height">
-                                  <HeadingText spacingType={[HeadingText.SPACING_TYPE.MEDIUM]} type={HeadingText.TYPE.HEADING_4}>
-                                      Transaction Errors
-                                  </HeadingText>
-                                  <PieChart fullWidth accountId={this.accountId} query={errCount+since} />
-                                  </main>
-                              </GridItem>
-                          </Grid>
-                      </>
-                      );
-                  }}
-              </PlatformStateContext.Consumer>
-          );
-      }
+    }
   }
-  ```
+}
+```
 
-  </Step>
+Essentially, this query asks to return all of the providers linked to your account and the services that each one offers. 
+
+<Important>
+  
+  Note that we are nesting our requests. That is to say, we are getting information about the parent (in this case, a cloud provider) AND the services offered. Rather than multiple REST API calls, GraphQL is able to retrieve this information in one fell swoop.
+
+</Important>
+
+Your results should looks something like this (depending on your enabled integrations):
+
+```jsx
+{
+  "data": {
+    "actor": {
+      "account": {
+        "cloud": {
+          "linkedAccounts": [
+            {
+              "authLabel": "arn:aws:iam::830139413159:role/NewRelicInfrastructure-Integrations-Origami",
+              "externalId": "830139413159",
+              "id": 4912,
+              "integrations": [
+                {
+                  "id": 77310,
+                  "name": "RDS",
+                  "service": {
+                    "createdAt": 1470991744,
+                    "id": 3,
+                    "name": "RDS",
+                    "provider": {
+                      "id": 1,
+                      "name": "Amazon Web Services"
+                    },
+                    "slug": "rds",
+                    "updatedAt": 1534242454
+                  }
+                },
+                {
+                  "id": 177183,
+                  "name": "S3",
+                  "service": {
+                    "createdAt": 1470991745,
+                    "id": 4,
+                    "name": "S3",
+                    "provider": {
+                      "id": 1,
+                      "name": "Amazon Web Services"
+                    },
+                    "slug": "s3",
+                    "updatedAt": 1534242454
+                  }
+                },
+                {
+                  "id": 152170,
+                  "name": "Billing",
+                  "service": {
+                    "createdAt": 1491900437,
+                    "id": 18,
+                    "name": "Billing",
+                    "provider": {
+                      "id": 1,
+                      "name": "Amazon Web Services"
+                    },
+                    "slug": "billing",
+                    "updatedAt": 1534242454
+                  }
+                },
+                {
+                  "id": 177193,
+                  "name": "Lambda",
+                  "service": {
+                    "createdAt": 1477910055,
+                    "id": 14,
+                    "name": "Lambda",
+                    "provider": {
+                      "id": 1,
+                      "name": "Amazon Web Services"
+                    },
+                    "slug": "lambda",
+                    "updatedAt": 1534242454
+                  }
+                },
+                {
+                  "id": 177195,
+                  "name": "Redshift",
+                  "service": {
+                    "createdAt": 1497364366,
+                    "id": 21,
+                    "name": "Redshift",
+                    "provider": {
+                      "id": 1,
+                      "name": "Amazon Web Services"
+                    },
+                    "slug": "redshift",
+                    "updatedAt": 1534242454
+                  }
+                },
+                {
+                  "id": 177184,
+                  "name": "DynamoDB",
+                  "service": {
+                    "createdAt": 1470991758,
+                    "id": 13,
+                    "name": "DynamoDB",
+                    "provider": {
+                      "id": 1,
+                      "name": "Amazon Web Services"
+                    },
+                    "slug": "dynamodb",
+                    "updatedAt": 1534242454
+                  }
+                },
+                {
+                  "id": 177194,
+                  "name": "Elastic Beanstalk",
+                  "service": {
+                    "createdAt": 1505232438,
+                    "id": 30,
+                    "name": "Elastic Beanstalk",
+                    "provider": {
+                      "id": 1,
+                      "name": "Amazon Web Services"
+                    },
+                    "slug": "elasticbeanstalk",
+                    "updatedAt": 1534242454
+                  }
+                }
+              ],
+              "name": "8301-3941-3159",
+              "provider": {
+                "id": 1,
+                "name": "Amazon Web Services",
+                "slug": "aws"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+```
 
 </Steps>
+
+### Cloud Configuration details
+
+Now let's dive deeper into a specific service. In this case, we will look at ```tag``` and ```metricsPollingInterval```, both of which we will set using a ```mutation``` in the next section.
+
+To do this, we will need to use the ```interfaces``` feature of GraphQL. When your query returns multiple types of data (in the previous example we asked for *all* types of cloud integration configurations) you can use interfaces to get information specific to each type of data. In the query below, we have added two clauses to accomplish this:
+
+```jsx
+... on CloudDynamodbIntegration{
+  metricsPollingInterval
+  tagKey
+  tagValue
+  updatedAt
+}
+... on CloudRedshiftIntegration{
+  metricsPollingInterval
+  tagKey
+  tagValue
+  updatedAt
+}
+```
+
+The ```...``` on ```<interfaceName>``` functions as a sort of switch statement for your data. If your query finds a result of type ```CloudDynamodbIntegration``` or ```CloudRedshiftIntegration```, then it will also return the ```metricsPollingInterval```, ```tagKey```, ```tagValue```, and ```updatedAt``` fields. 
+
+Copy and paste the query below into GraphiQL and click ```Play```.
+
+```jsx
+{
+  actor {
+    account(id: 630060) {
+      cloud {
+        linkedAccounts {
+          id
+          externalId
+          name
+          authLabel
+          provider {
+            id
+            name
+            slug
+          }
+          integrations {
+            id
+            name
+            service {
+              id
+              slug
+              name
+              createdAt
+              updatedAt
+              provider {
+                name
+                id
+              }
+            }
+            ... on CloudDynamodbIntegration{
+              metricsPollingInterval
+              tagKey
+              tagValue
+              updatedAt
+            }
+            ... on CloudRedshiftIntegration{
+              metricsPollingInterval
+              tagKey
+              tagValue
+              updatedAt
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+<Important>
+
+  Note: Sometimes GraphiQL does not make it easy to discover interface names. The best way to determine if there are any interfaces available is to look at the documentation. You could also type ```... on``` and press ```ctrl + space``` to bring up the type-ahead menu.
+
+</Important>
+
+You can see in the result that the ```DynamoDb``` and ```Redshift``` configuration information objects contain the extra fields specified in our new query.
+
+```jsx
+{
+                  "id": 177195,
+                  "metricsPollingInterval": 900,
+                  "name": "Redshift",
+                  "service": {
+                    "createdAt": 1497364366,
+                    "id": 21,
+                    "name": "Redshift",
+                    "provider": {
+                      "id": 1,
+                      "name": "Amazon Web Services"
+                    },
+                    "slug": "redshift",
+                    "updatedAt": 1534242454
+                  },
+                  "tagKey": "mdw-test",
+                  "tagValue": null,
+                  "updatedAt": 1544435410
+                },
+                {
+                  "id": 177184,
+                  "metricsPollingInterval": 900,
+                  "name": "DynamoDB",
+                  "service": {
+                    "createdAt": 1470991758,
+                    "id": 13,
+                    "name": "DynamoDB",
+                    "provider": {
+                      "id": 1,
+                      "name": "Amazon Web Services"
+                    },
+                    "slug": "dynamodb",
+                    "updatedAt": 1534242454
+                  },
+                  "tagKey": "mdw-test",
+                  "tagValue": null,
+                  "updatedAt": 1549499902
+                },
+```
+
+And just like that, you have successfully queried information from New Relic's Infrastructure offering.
+
+You also learned how to use interfaces to get addtional information regarding specific cloud infrastructure types. Next up, we'll update the polling intervals of some services. We will need your account id again, so be sure to hold on to that.
+
+## 3. Updating Values with GraphQL
+
+
 
 ## Summary
 
