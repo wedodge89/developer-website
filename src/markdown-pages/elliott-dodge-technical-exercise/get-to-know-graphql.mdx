@@ -48,6 +48,8 @@ One of the advantages of GraphQL is that it enables the client, rather than the 
 
 In the query panel on the left side, press enter/return after the name field and type ```email``` on the new line. 
 
+![Adding email to the query](https://github.com/newrelic/nr1-workshop/raw/master/screenshots/graphql-ex0-screen02.png)
+
 <Important>
 
   As you type, GraphiQL provides type-ahead suggestions. 
@@ -58,7 +60,7 @@ In the query panel on the left side, press enter/return after the name field and
 
 Once you have added the email, press the **Play** button again. Your result should look like this:
 
-{/* Second Image here. Results of query with name and email. */}
+![The result of adding email to the query](https://github.com/newrelic/nr1-workshop/raw/master/screenshots/graphql-ex0-screen03.png)
 
   </Step>
 
@@ -83,6 +85,8 @@ Now it's time to explore what kind of information we can uncover using GraphiQL.
   <Step>
 
 To start, open [GraphiQL](https://api.newrelic.com/graphiql) and click the ```< Docs``` button in the upper right. This will open a side panel to the right that shows available fields for New Relic's GraphQL service.
+
+![GraphiQL with Documentation panel open](https://github.com/newrelic/nr1-workshop/raw/master/screenshots/graphql-ex1-screen01.png)
 
 <Important>
   GraphQL has two entry points, query and mutation. Queries return information from New Relic. Mutations alter information.
@@ -121,7 +125,7 @@ Click on ```actor``` in your right-side information panel for more information a
 
 When you run this query, the GraphQL server fetches the requested information for all accounts that the user, you, has access to. When the queries are all finished (or when they timeout or encounter an error), GraphQL does the heavy lifting of assembling the result and returning it to the GraphiQL client. Your results should look something like this:
 
-{/* Third image */}
+![Results of query with user and accounts](https://github.com/newrelic/nr1-workshop/raw/master/screenshots/graphql-ex1-screen02.png)
 
   </Step>
 
@@ -248,7 +252,7 @@ Before moving forward, take some time to explore what is available to you. Click
 
   </Step>
 
-{/* Next image goes here */}
+![An example of New Relic's integrations configuration options](https://github.com/newrelic/nr1-workshop/raw/master/screenshots/graphql-ex2-screen01.png)
 
 </Steps>
 
