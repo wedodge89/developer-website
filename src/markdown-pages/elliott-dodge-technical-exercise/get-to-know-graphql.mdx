@@ -597,6 +597,8 @@ In GraphQL, updating or modifying data is called a mutation. It is represented a
 
 Before continuing, go to [GraphiQL](https://api.newrelic.com/graphiql) and click the ```< Docs``` button to open the ```Documentation Explorer```. Click on ```mutation: RootMutationType``` and see what fields you can update using GraphQL. Specifically, take a look at ```metricsPollingInterval``` and see which objects can be updated.
 
+![Zoomed-in view of the documentation panel](https://github.com/newrelic/nr1-workshop/raw/master/screenshots/graphql-ex3-screen01.png)
+
 </Important>
 
 ### GraphQL Mutations
@@ -615,7 +617,7 @@ Under ```Integrations```, select the ```Amazon Web Services``` tab.
 
   </Step>
 
-{/* Insert example image of integrations screen. */}
+![The AWS Infrastructure tab](https://github.com/newrelic/nr1-workshop/raw/master/screenshots/graphql-ex3-screen02.png)
 
   <Step>
 
@@ -626,6 +628,8 @@ Select ```Configure``` on the ```DynamoDB``` entry. If you don't have DynamoDB, 
   <Step>
   
 Set the ```Metrics data polling interval every:``` and ```Inventory data polling interval every:``` both to ```5 minutes```. You should also make sure that the ```Collect tags``` switch is set to ```ON```. Once you have made these changes, click the ```Submit``` button to save the changes.
+
+![The DynamoDB configuration page](https://github.com/newrelic/nr1-workshop/raw/master/screenshots/graphql-ex3-screen03.png)
 
   </Step>
 
@@ -700,7 +704,7 @@ mutation{
 
   <Step>
 
-The final part of our mutation request is to request a set of fields on the successful execution of our request and/or capture any errors. Note that in the mutation, we have asked for the value of ```metricsPollingInterval``` to be returned using the interface technique from before. This is kind of like using a quick console log to ensure that the value has been changed correctly.
+The final part of our mutation request is to request a set of fields on the successful execution of our request and/or capture any errors. Note that in the mutation, we have asked for the value of ```metricsPollingInterval``` to be returned using the interface technique from before. This is kind of like using a quick console log in JavaScript to ensure that the value has been changed correctly.
 
   </Step>
 
@@ -784,9 +788,9 @@ Now, go back to New Relic Infrastructure and refresh the DynamoDB configuration 
 
   </Step>
 
-</Steps>
+![The hard-earned result of your GraphQL mutation](https://github.com/newrelic/nr1-workshop/raw/master/screenshots/graphql-ex3-screen04.png)
 
-{/* Insert image here */}
+</Steps>
 
 Ta-da! You have officially made your first successful mutation request using GraphQl. For our final magic trick, we are going to learn about NRQL!
 
@@ -893,7 +897,7 @@ Copy the query below, noting the addition of the ```PageViews``` and ```Transact
 
 Your results should look more like this (you can expand the data sections for more in-depth information):
 
-{/* Example image */}
+![Screenshot of a NRQL query](https://github.com/newrelic/nr1-workshop/raw/master/screenshots/graphql-ex4-screen01.png)
 
 ### More Fun with NRQL
 
