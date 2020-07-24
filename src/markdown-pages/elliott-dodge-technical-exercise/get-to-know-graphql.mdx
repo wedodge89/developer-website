@@ -9,9 +9,9 @@ tileShorthand:
   description: 'Learn to use GraphQL to gather and modify information'
 ---
 <Intro>
-The purpose of this guide is to introduce you to the GraphQL language and GraphiQL environment. Through the three lessons of this course, we will practice using GraphQL to fetch and edit data.
+The purpose of this guide is to introduce you to the GraphQL language and GraphiQL environment. Through this course, we will practice using GraphQL to fetch and edit data.
 
-By the time you finish this workshop, you will be ready to use GraphQL to search and edit all kinds of data and optimize your New Relic experience.
+By the time you finish this workshop, you will be ready to use GraphQL to search and edit all kinds of data in New Relic.
 
 </Intro>
 
@@ -22,11 +22,11 @@ In order to use GraphiQL, you will need a New Relic account and an API key.
 * If you do not yet have a New Relic account, you can create one at the [signup page](https://www.newrelic.com/signup).
 * Once you have created your account (or if you already had one), you will need to generate an API key for use with GraphiQL. Start by navigating to [New Relic One](one.newrelic.com) and clicking on the arrow beside your profile picture in the top-right corner.
 * From the drop-down menu, select "Account settings".
-* On the **Account settings** page, find and click "Users and roles" under the *ACCOUNT* heading.
+* On the **Account settings** page, find and click ```Users and roles``` under the **ACCOUNT** heading.
 * This will open the **Users and roles** page in a new tab in your browser. In the *Users* list, find your account and click on either the name or email address. This will open the **User information** page for that user.
-* From there, find and click the *API keys* tab, and then the *New API key* button. When prompted, click "Yes, create API key" and voila, you are the proud owner of a new API key for use with GraphiQL.
+* From there, find and click the **API keys** tab, and then the ```New API key``` button. When prompted, click "Yes, create API key" and voila, you are the proud owner of a new API key for use with GraphiQL.
 
-## 0. Your first GraphQL query
+## Your first GraphQL query
 
 Now that you have an account and an API key, it's time to get your hands dirty with GraphQL and GraphiQL. To start, open [GraphiQL](https://api.newrelic.com/graphiql) in your browser.
 
@@ -68,7 +68,7 @@ Once you have added the email, press the **Play** button again. Your result shou
 
 And just like that, you have successfully completed your first custom GraphQL query. The next step on your journey to becoming a GraphQL master is to learn about the GraphQL schema.
 
-## 1. The GraphQL Schema
+## The GraphQL Schema
 
 ### Understanding the Data Model
 
@@ -90,7 +90,7 @@ To start, open [GraphiQL](https://api.newrelic.com/graphiql) and click the ```< 
 
 <Important>
 
-  GraphQL has two entry points, query and mutation. Queries return information from New Relic. Mutations alter information.
+  **Note**: GraphQL has two entry points, query and mutation. Queries return information from New Relic. Mutations alter information.
 
 </Important>
 
@@ -125,7 +125,7 @@ Click on ```actor``` in your right-side information panel for more information a
 
   <Step>
 
-When you run this query, the GraphQL server fetches the requested information for all accounts that the user, you, has access to. When the queries are all finished (or when they timeout or encounter an error), GraphQL does the heavy lifting of assembling the result and returning it to the GraphiQL client. Your results should look something like this:
+When you run this query, the GraphQL server fetches the requested information for all accounts that the user has access to. When the queries are all finished (or when they timeout or encounter an error), GraphQL does the heavy lifting of assembling the result and returning it to the GraphiQL client. Your results should look something like this:
 
 ![Results of query with user and accounts](https://github.com/newrelic/nr1-workshop/raw/master/screenshots/graphql-ex1-screen02.png)
 
@@ -271,7 +271,7 @@ Under ```Integrations```, select the ```Amazon Web Services``` tab.
 
   <Step>
 
-Select ```Configure``` on the ```DynamoDB``` entry. If you don't have DynamoDB, no problem. Simply choose one of your other integrations. It may take a bit of work, but you should be able to substitute the correct value.
+Select ```Configure``` on the ```DynamoDB``` entry. If you don't have DynamoDB, no problem. Simply choose one of your other integrations. It may take a bit of work, but you should be able to substitute the correct values.
 
   </Step>
 
@@ -284,8 +284,6 @@ Set the ```Metrics data polling interval every:``` and ```Inventory data polling
   </Step>
 
 </Steps>
-
-{/* Insert example image here */}
 
 Now it's time to build our first mutation query!
 
@@ -313,7 +311,7 @@ Next, you can either type out or use type-ahead to select which information you 
 
 The first argumet is ```accountId```, which will be the same account id that you used in the previous exercise.
 
-The second arguement is which integrations you want to update. These integrations are specified by the named set of cloud providers (e.g. AWS or Azure). For this instance, we will use ```aws```. So far, you should have something along these lines:
+The second argument is which integrations you want to update. These integrations are specified by the named set of cloud providers (e.g. AWS or Azure). For this instance, we will use ```aws```. So far, you should have something along these lines:
 
 ```jsx
 mutation{
@@ -446,16 +444,13 @@ Ta-da! You have officially made your first successful mutation request using Gra
 
 ## Summary
 
-By now, hopefully you've gotten comfortable with the basic features that define GraphQL, querying and mutating data. There are still plenty of powerful features to learn, but you are already well-equipped to handle a variety of data-related needs. 
+By now you've gotten comfortable with the basic features that define GraphQL, querying and mutating data. There are still plenty of powerful features to learn, but you are already well-equipped to handle a variety of data-related needs. 
 
 ## Glossary of Terms
 
 * ***GraphQL***-a strongly-typed query language originally developed by Facebook. Used to query and mutate data using API calls.
-
 * ***GraphiQL***-a browser IDE designed specifically for use with GraphQL. Includes a variety of tools to help the user correctly structure queries.
-
 * ***NRQL***-**N**ew **R**elic **Q**uery **L**anguage, a SQL-like query language designed speicifcally for use with New Relic. Allows the user to query the New Relic database for information directly related to New Relic's tools
-
 
 ## Related information
 
