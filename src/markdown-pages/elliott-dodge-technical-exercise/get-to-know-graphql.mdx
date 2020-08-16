@@ -22,9 +22,9 @@ In order to use GraphiQL, you will need a New Relic account and an API key.
 * If you do not yet have a New Relic account, you can create one at the [signup page](https://www.newrelic.com/signup).
 * Once you have created your account (or if you already had one), you will need to generate an API key for use with GraphiQL. Start by navigating to [New Relic One](one.newrelic.com) and clicking on the arrow beside your profile picture in the top-right corner.
 * From the drop-down menu, select "Account settings".
-* On the **Account settings** page, find and click ```Users and roles``` under the **ACCOUNT** heading.
-* This will open the **Users and roles** page in a new tab in your browser. In the *Users* list, find your account and click on either the name or email address. This will open the **User information** page for that user.
-* From there, find and click the **API keys** tab, and then the ```New API key``` button. When prompted, click "Yes, create API key" and voila, you are the proud owner of a new API key for use with GraphiQL.
+* On the ```Account settings``` page, find and click ```Users and roles``` under the ```ACCOUNT``` heading.
+* This will open the ```Users and roles``` page in a new tab in your browser. In the ```Users``` list, find your account and click on either the name or email address. This will open the ```User information``` page for that user.
+* From there, find and click the ```API keys``` tab, and then the ```New API key``` button. When prompted, click "Yes, create API key" and voila, you are the proud owner of a new API key for use with GraphiQL.
 
 ## Your first GraphQL query
 
@@ -36,7 +36,7 @@ Now that you have an account and an API key, it's time to get your hands dirty w
 
   <Step>
 
-When you open GraphiQL, you will be greeted by a simple sample query to get you started. Try clicking the **Play** button to execute the example query. Your results should look something like this, but with your name, of course:
+When you open GraphiQL, you will be greeted by a simple sample query to get you started. Try clicking the ```Play``` button to execute the example query. Your results should look something like this, but with your name, of course:
 
 ![An example of the GraphiQL landing page](https://github.com/newrelic/nr1-workshop/raw/master/screenshots/graphql-ex0-screen01.png)
 
@@ -44,7 +44,7 @@ When you open GraphiQL, you will be greeted by a simple sample query to get you 
 
   <Step>
 
-One of the advantages of GraphQL is that it enables the client, rather than the server, to determine which pieces of information a query returns. To demonstrate this, let's see if we can return the user's email, in additon to their name.
+One of the advantages of GraphQL is that it enables the client to determine which pieces of information a query returns. To demonstrate this, let's see if we can return the user's email, in additon to their name.
 
 In the query panel on the left side, press enter/return after the name field and type ```email``` on the new line. 
 
@@ -58,7 +58,7 @@ In the query panel on the left side, press enter/return after the name field and
 
 </Important>
 
-Once you have added the email, press the **Play** button again. Your result should look like this:
+Once you have added the email, press the ```Play``` button again. Your result should look like this:
 
 ![The result of adding email to the query](https://github.com/newrelic/nr1-workshop/raw/master/screenshots/graphql-ex0-screen03.png)
 
@@ -90,7 +90,7 @@ To start, open [GraphiQL](https://api.newrelic.com/graphiql) and click the ```< 
 
 <Important>
 
-  **Note**: GraphQL has two entry points, query and mutation. Queries return information from New Relic. Mutations alter information.
+  ```Note```: GraphQL has two entry points, query and mutation. Queries return information from New Relic. Mutations alter information.
 
 </Important>
 
@@ -293,7 +293,7 @@ The syntax for creating a mutation request is essentially the same as a query, e
 
 <Important>
 
-**Note**: If you submit a request starting with {, the keyword ```query``` is implied.
+```Note```: If you submit a request starting with {, the keyword ```query``` is implied.
 
 </Important>
 
@@ -358,7 +358,7 @@ The final part of our mutation request is to request a set of fields on the succ
 
 <Important>
 
-**Note**: The polling interval is measured in seconds. The valid values are ```300``` (5 minutes), ```900``` (15 minutes), ```1800``` (30 minutes), and ```3600``` (1 hour).
+```Note```: The polling interval is measured in seconds. The valid values are ```300``` (5 minutes), ```900``` (15 minutes), ```1800``` (30 minutes), and ```3600``` (1 hour).
 
 </Important>
 
